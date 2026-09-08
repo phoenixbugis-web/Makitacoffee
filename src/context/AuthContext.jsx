@@ -20,7 +20,8 @@ export function AuthProvider({ children }) {
         const res = await fetch('/api/auth/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
-        if (res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
           const data = await res.json();
           setUser(data.user);
           localStorage.setItem('cafe_user', JSON.stringify(data.user));
@@ -42,6 +43,10 @@ export function AuthProvider({ children }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new Error('Server backend tidak merespons (Pastikan aplikasi di-deploy sebagai Web Service Node.js, bukan Static Frontend saja).');
+    }
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.error || 'Login gagal.');
