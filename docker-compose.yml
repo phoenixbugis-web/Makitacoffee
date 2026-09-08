@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  cafe-app:
+    build: .
+    container_name: cafe_ordering_app
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - JWT_SECRET=cafe-senja-secret-key-production-change-this
+    volumes:
+      # Data persisten database SQLite dan gambar upload
+      - ./server/db:/app/server/db
+      - ./server/uploads:/app/server/uploads
