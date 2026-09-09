@@ -13,7 +13,8 @@ import {
   Lock,
   User,
   AlertCircle,
-  Smartphone
+  Smartphone,
+  Camera
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -154,7 +155,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-gray-100 relative z-10">
+            <div className="mt-8 pt-4 border-t border-gray-100 relative z-10 space-y-2.5">
               <button
                 onClick={goToCustomerOrder}
                 className="w-full py-3.5 px-6 rounded-2xl font-bold text-white shadow-lg transition flex items-center justify-center gap-3 text-base group-hover:scale-[1.01]"
@@ -164,7 +165,17 @@ export default function LandingPage() {
                 <span>Buka Menu Meja #{selectedTable}</span>
                 <ArrowRight size={18} className="translate-x-0 group-hover:translate-x-1 transition" />
               </button>
-              <p className="text-center text-[11px] text-gray-400 mt-2.5">
+
+              <button
+                type="button"
+                onClick={() => navigate('/scan')}
+                className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 transition flex items-center justify-center gap-2"
+              >
+                <Camera size={16} className="text-amber-700" />
+                <span>Buka Kamera Scan Barcode Meja</span>
+              </button>
+
+              <p className="text-center text-[11px] text-gray-400 mt-1">
                 *Pelanggan tidak perlu download aplikasi atau login akun.
               </p>
             </div>
