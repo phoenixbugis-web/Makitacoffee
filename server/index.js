@@ -9,6 +9,7 @@ import multer from 'multer';
 import QRCode from 'qrcode';
 import path from 'path';
 import fs from 'fs';
+import os from 'os';
 import { fileURLToPath } from 'url';
 import { initDatabase } from './db/seed.js';
 
@@ -1535,8 +1536,24 @@ if (fs.existsSync(distDir)) {
   });
 }
 
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  return '127.0.0.1';
+}
+
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server Cafe Backend & WebSocket berjalan pada port ${PORT}`);
-  console.log(`- Akses Komputer Lokal: http://localhost:${PORT}`);
-  console.log(`- Akses Semua Perangkat 1 Wi-Fi (HP/Tablet): http://192.168.1.6:${PORT}`);
+  const localIp = getLocalIpAddress();
+  console.log(`=================================================`);
+  console.log(`☕ SERVER MAKITA COFFEE BERJALAN PADA PORT ${PORT}`);
+  console.log(`-------------------------------------------------`);
+  console.log(`- Akses Komputer Lokal : http://localhost:${PORT}`);
+  console.log(`- Akses HP/Tablet/Wi-Fi : http://${localIp}:${PORT}`);
+  console.log(`=================================================`);
 });
