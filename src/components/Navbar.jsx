@@ -29,9 +29,12 @@ export default function Navbar() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // If not logged in, do not render Navbar anywhere (customers will not see staff navigation)
+  if (!user) return null;
+
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/login');
   };
 
   const isActive = (path) => location.pathname === path;

@@ -92,3 +92,16 @@ body {
 .font-thermal {
   font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace;
 }
+
+/* Scanner Laser Animation */
+@keyframes scanLine {
+  0% { top: 6%; opacity: 0.2; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 90%; opacity: 0.2; }
+}
+
+.animate-scan {
+  animation: scanLine 2.2s ease-in-out infinite alternate;
+}
+

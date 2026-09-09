@@ -18,9 +18,9 @@ export default function ProtectedRoute({ allowedRoles = [], children }) {
     );
   }
 
-  // Not logged in -> redirect to Landing Page / Login
+  // Not logged in -> redirect to Staff Login
   if (!user) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   // Role check: Admin can access everything!

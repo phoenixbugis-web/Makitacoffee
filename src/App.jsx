@@ -4,7 +4,8 @@ import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
-import LandingPage from './pages/LandingPage';
+import CustomerScanner from './pages/CustomerScanner';
+import StaffLogin from './pages/StaffLogin';
 import CustomerOrder from './pages/customer/CustomerOrder';
 import OrderTracker from './pages/customer/OrderTracker';
 import CashierDashboard from './pages/cashier/CashierDashboard';
@@ -20,8 +21,13 @@ import AdminDiscounts from './pages/admin/AdminDiscounts';
 export default function App() {
   const location = useLocation();
 
-  // Hide global navbar on Customer ordering screen or Kitchen Display to maximize screen estate
-  const hideNavbar = location.pathname.startsWith('/order') || location.pathname === '/dapur';
+  // Hide global navbar on Customer Scanner, Staff Login, Customer ordering, or Kitchen Display
+  const hideNavbar =
+    location.pathname === '/' ||
+    location.pathname === '/login' ||
+    location.pathname === '/staff' ||
+    location.pathname.startsWith('/order') ||
+    location.pathname === '/dapur';
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -29,10 +35,14 @@ export default function App() {
 
       <main className="flex-1">
         <Routes>
-          {/* Public Routes (No login required) */}
-          <Route path="/" element={<LandingPage />} />
+          {/* Customer Route: Direct Camera Scanner to scan table QR code */}
+          <Route path="/" element={<CustomerScanner />} />
           <Route path="/order" element={<CustomerOrder />} />
           <Route path="/order/track/:orderNumber" element={<OrderTracker />} />
+
+          {/* Dedicated Staff Login (Isolated from customers) */}
+          <Route path="/login" element={<StaffLogin />} />
+          <Route path="/staff" element={<Navigate to="/login" replace />} />
 
           {/* Cashier Routes (Kasir & Admin) */}
           <Route
